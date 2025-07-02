@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import BlogPostForm from './components/BlogPostForm/BlogPostForm';
 import BlogList from './components/BlogList';
 import Layout from './components/Layout/Layout';
+import './components/CommentSystem/CommentSystem.module.css';
 
 function App() {
   const [posts, setPosts] = useState([]);
