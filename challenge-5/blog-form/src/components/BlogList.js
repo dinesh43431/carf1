@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CommentSystem from './CommentSystem/CommentSystem';
 
 function BlogList({ posts, onDelete }) {
-  const [comments, setComments] = React.useState(() => posts.map(() => []));
+  const [comments, setComments] = useState([]);
+
+  // Ensure comments array matches posts length
+  useEffect(() => {
+    setComments((prev) => {
+      if (prev.length === posts.length) return prev;
+      // Fill with empty arrays for new posts
+      return posts.map((_, i) => prev[i] || []);
+    });
+  }, [posts]);
 
   const handleAddComment = (postIdx, comment) => {
     setComments((prev) => {
-      const updated = [...prev];
-      updated[postIdx] = [
-        ...updated[postIdx],
-        {
-          ...comment,
-          date: new Date(),
-          avatar: comment.name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(comment.name)}&background=random` : undefined,
-        },
-      ];
+      const updated = prev.map((arr, i) =>
+        i === postIdx
+          ? [
+              ...arr,
+              {
+                ...comment,
+                date: new Date(),
+                avatar: comment.name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(comment.name)}&background=random` : undefined,
+              },
+            ]
+          : arr
+      );
       return updated;
     });
   };

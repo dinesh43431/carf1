@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
+import SearchBar from '../SearchBar';
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -39,6 +40,9 @@ const NavBar = () => {
         <Link to="/">Home</Link>
         <Link to="/blog">Blog</Link>
         <Link to="/about">About</Link>
+        <div className={styles.searchBarWrapper}>
+          <SearchBar onSearch={onSearch} />
+        </div>
       </div>
       <button
         ref={buttonRef}
@@ -60,6 +64,9 @@ const NavBar = () => {
         <Link to="/" onClick={toggleMobileMenu}>Home</Link>
         <Link to="/blog" onClick={toggleMobileMenu}>Blog</Link>
         <Link to="/about" onClick={toggleMobileMenu}>About</Link>
+        <div className={styles.mobileSearchBarWrapper}>
+          <SearchBar onSearch={onSearch} />
+        </div>
       </div>
     </nav>
   );
